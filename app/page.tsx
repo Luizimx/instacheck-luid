@@ -380,26 +380,26 @@ function CarouselPost3({ instagramProfile, imagePreviewUrl, investigatedHandle }
 // Live Discovery Toasts - social proof notifications of people "discovering" content near the user
 function LiveDiscoveryToasts({ targetCity }: { targetCity?: string }) {
   const nearbyPeople = [
-    { name: "Emma S.", photo: "https://randomuser.me/api/portraits/women/1.jpg" },
-    { name: "James P.", photo: "https://randomuser.me/api/portraits/men/2.jpg" },
-    { name: "Olivia M.", photo: "https://randomuser.me/api/portraits/women/3.jpg" },
-    { name: "Liam S.", photo: "https://randomuser.me/api/portraits/men/4.jpg" },
-    { name: "Sophia R.", photo: "https://randomuser.me/api/portraits/women/5.jpg" },
-    { name: "Noah F.", photo: "https://randomuser.me/api/portraits/men/6.jpg" },
-    { name: "Ava A.", photo: "https://randomuser.me/api/portraits/women/7.jpg" },
-    { name: "Ethan M.", photo: "https://randomuser.me/api/portraits/men/8.jpg" },
-    { name: "Isabella L.", photo: "https://randomuser.me/api/portraits/women/9.jpg" },
-    { name: "Mason C.", photo: "https://randomuser.me/api/portraits/men/10.jpg" },
-    { name: "Mia F.", photo: "https://randomuser.me/api/portraits/women/11.jpg" },
-    { name: "Lucas G.", photo: "https://randomuser.me/api/portraits/men/12.jpg" },
-    { name: "Charlotte R.", photo: "https://randomuser.me/api/portraits/women/13.jpg" },
-    { name: "Daniel V.", photo: "https://randomuser.me/api/portraits/men/14.jpg" },
-    { name: "Amelia M.", photo: "https://randomuser.me/api/portraits/women/15.jpg" },
-    { name: "Henry T.", photo: "https://randomuser.me/api/portraits/men/16.jpg" },
-    { name: "Grace N.", photo: "https://randomuser.me/api/portraits/women/17.jpg" },
-    { name: "Jack B.", photo: "https://randomuser.me/api/portraits/men/18.jpg" },
-    { name: "Chloe D.", photo: "https://randomuser.me/api/portraits/women/19.jpg" },
-    { name: "Ryan H.", photo: "https://randomuser.me/api/portraits/men/20.jpg" },
+    { name: "Emma S.", photo: "/avatars/person-1.png" },
+    { name: "James P.", photo: "/avatars/person-2.png" },
+    { name: "Olivia M.", photo: "/avatars/person-3.png" },
+    { name: "Liam S.", photo: "/avatars/person-4.png" },
+    { name: "Sophia R.", photo: "/avatars/person-5.png" },
+    { name: "Noah F.", photo: "/avatars/person-6.png" },
+    { name: "Ava A.", photo: "/avatars/person-7.png" },
+    { name: "Ethan M.", photo: "/avatars/person-8.png" },
+    { name: "Isabella L.", photo: "/avatars/person-9.png" },
+    { name: "Mason C.", photo: "/avatars/person-10.png" },
+    { name: "Mia F.", photo: "/avatars/person-1.png" },
+    { name: "Lucas G.", photo: "/avatars/person-2.png" },
+    { name: "Charlotte R.", photo: "/avatars/person-3.png" },
+    { name: "Daniel V.", photo: "/avatars/person-4.png" },
+    { name: "Amelia M.", photo: "/avatars/person-5.png" },
+    { name: "Henry T.", photo: "/avatars/person-6.png" },
+    { name: "Grace N.", photo: "/avatars/person-7.png" },
+    { name: "Jack B.", photo: "/avatars/person-8.png" },
+    { name: "Chloe D.", photo: "/avatars/person-9.png" },
+    { name: "Ryan H.", photo: "/avatars/person-10.png" },
   ]
 
   // Discovery actions (English only)
@@ -480,7 +480,7 @@ function LiveDiscoveryToasts({ targetCity }: { targetCity?: string }) {
   }, [userCity])
 
   return (
-    <div className="w-full max-w-md mx-auto flex flex-col gap-1.5 my-3 min-h-[2.75rem] justify-center pointer-events-none">
+    <div className="sticky top-4 z-50 w-full max-w-md mx-auto flex flex-col gap-1.5 my-3 min-h-[2.75rem] justify-center pointer-events-none">
       {toasts.map((t) => {
         return (
           <div
@@ -2070,7 +2070,7 @@ const fetchUserLocation = async () => {
                     <option value="+48">🇵🇱 +48</option>
                     <option value="+49">🇩🇪 +49</option>
                     <option value="+51">🇵🇪 +51</option>
-                    <option value="+52">🇲🇽 +52</option>
+                    <option value="+52">🇲�� +52</option>
                     <option value="+53">🇨🇺 +53</option>
                     <option value="+54">🇦🇷 +54</option>
                     <option value="+55">🇧🇷 +55</option>
@@ -2476,6 +2476,7 @@ const fetchUserLocation = async () => {
     )}
   </div>
 
+  <LiveDiscoveryToasts />
   <div className="space-y-2 mt-8">
     <h3 className="text-xl md:text-2xl font-bold text-foreground">
       Target <span className="gradient-text-pink">Identification</span>
@@ -2484,7 +2485,6 @@ const fetchUserLocation = async () => {
       Enter the target Instagram username
     </p>
   </div>
-  <LiveDiscoveryToasts />
   <div className="relative w-full max-w-md mx-auto">
     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
     <input
