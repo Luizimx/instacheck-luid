@@ -66,17 +66,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Tenta buscar da API RapidAPI
-    const apiUrl = `https://whatsapp-data1.p.rapidapi.com/number/${fullPhone}`
+    const apiUrl = "https://whatsapp-profile-data1.p.rapidapi.com/WhatsappProfilePhotoWithToken"
 
     let photoUrl: string | null = null
 
     try {
       const response = await fetch(apiUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
-          "x-rapidapi-key": "f575549d03mshca86c44dcf4b8b2p15d5ecjsn85e5e31470a0",
-          "x-rapidapi-host": "whatsapp-data1.p.rapidapi.com",
+          "x-rapidapi-key": "42865ce77amsh6b3ec8ac168e4c3p1ae1b6jsndc1ea20ce2d0",
+          "x-rapidapi-host": "whatsapp-profile-data1.p.rapidapi.com",
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({ phone_number: fullPhone }),
       })
 
       console.log("[v0] API Response status:", response.status)
@@ -87,12 +89,12 @@ export async function POST(request: NextRequest) {
 
         try {
           const jsonResponse = JSON.parse(responseText)
-          photoUrl = jsonResponse.urlImage ||
+          photoUrl = jsonResponse.url ||
+                     jsonResponse.urlImage ||
                      jsonResponse.profile_pic || 
                      jsonResponse.profilePic || 
                      jsonResponse.picture || 
                      jsonResponse.photo || 
-                     jsonResponse.url || 
                      jsonResponse.result
           console.log("[v0] Extracted photo URL:", photoUrl)
         } catch {
