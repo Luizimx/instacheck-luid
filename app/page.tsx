@@ -480,7 +480,7 @@ function LiveDiscoveryToasts({ targetCity }: { targetCity?: string }) {
   }, [userCity])
 
   return (
-    <div className="w-full max-w-md mx-auto flex flex-col gap-1.5 my-3 min-h-[2.75rem] justify-center pointer-events-none">
+    <div className="sticky top-4 z-50 w-full max-w-md mx-auto flex flex-col gap-1.5 my-3 min-h-[2.75rem] justify-center pointer-events-none">
       {toasts.map((t) => {
         return (
           <div
@@ -2070,7 +2070,7 @@ const fetchUserLocation = async () => {
                     <option value="+48">🇵🇱 +48</option>
                     <option value="+49">🇩🇪 +49</option>
                     <option value="+51">🇵🇪 +51</option>
-                    <option value="+52">🇲🇽 +52</option>
+                    <option value="+52">🇲�� +52</option>
                     <option value="+53">🇨🇺 +53</option>
                     <option value="+54">🇦🇷 +54</option>
                     <option value="+55">🇧🇷 +55</option>
@@ -2476,6 +2476,7 @@ const fetchUserLocation = async () => {
     )}
   </div>
 
+  <LiveDiscoveryToasts />
   <div className="space-y-2 mt-8">
     <h3 className="text-xl md:text-2xl font-bold text-foreground">
       Target <span className="gradient-text-pink">Identification</span>
@@ -2484,7 +2485,6 @@ const fetchUserLocation = async () => {
       Enter the target Instagram username
     </p>
   </div>
-  <LiveDiscoveryToasts />
   <div className="relative w-full max-w-md mx-auto">
     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
     <input
