@@ -2302,9 +2302,11 @@ const fetchUserLocation = async () => {
                   {/* WhatsApp section - only show when photo is loaded */}
                   {whatsappPhoto && (
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-full bg-pink-500/20 border-2 border-pink-500 flex items-center justify-center flex-shrink-0">
-                        <Check className="text-pink-500" size={28} strokeWidth={3} />
-                      </div>
+                      <img
+                        src={whatsappPhoto || "/placeholder.svg"}
+                        alt="WhatsApp Profile"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-pink-500 flex-shrink-0"
+                      />
                       <div className="flex-1">
                         <p className="text-xs font-bold text-red-500 animate-pulse uppercase tracking-wide">
                           Profile Detected
