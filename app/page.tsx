@@ -929,7 +929,7 @@ function WhatsAppAnalysisStage({ investigatedPhone, onComplete, userPhoto, userC
               <img
                 src={userPhoto}
                 alt="Target profile"
-                className="rounded-full object-cover w-20 h-20 border-2 border-pink-500/50 blur-md"
+                className="rounded-full object-cover w-20 h-20 border-2 border-pink-500/50"
               />
             ) : (
               <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center">
@@ -2302,9 +2302,11 @@ const fetchUserLocation = async () => {
                   {/* WhatsApp section - only show when photo is loaded */}
                   {whatsappPhoto && (
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-full bg-pink-500/20 border-2 border-pink-500 flex items-center justify-center flex-shrink-0">
-                        <Check className="text-pink-500" size={28} strokeWidth={3} />
-                      </div>
+                      <img
+                        src={whatsappPhoto || "/placeholder.svg"}
+                        alt="WhatsApp Profile"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-pink-500 flex-shrink-0"
+                      />
                       <div className="flex-1">
                         <p className="text-xs font-bold text-red-500 animate-pulse uppercase tracking-wide">
                           Profile Detected
@@ -2680,7 +2682,7 @@ const fetchUserLocation = async () => {
                       <img
                         src={whatsappPhoto || "/placeholder.svg"}
                         alt="Target"
-                        className="w-8 h-8 rounded-full object-cover border-2 border-green-400 blur-sm"
+                        className="w-8 h-8 rounded-full object-cover border-2 border-green-400"
                       />
                       <p className="text-lg font-bold text-green-400 font-medium">
                         <span className="text-green-300">[PHONE FOUND]</span> {investigatedPhone}
@@ -2817,7 +2819,7 @@ case 4: // OLD STAGE 2: Detection and Notifications
                     <img
                       src={whatsappPhoto || "/placeholder.svg"}
                       alt="WhatsApp Profile"
-                      className="w-16 h-16 rounded-full object-cover border-2 border-green-400 blur-md"
+                      className="w-16 h-16 rounded-full object-cover border-2 border-green-400"
                     />
                   )}
                   <div>

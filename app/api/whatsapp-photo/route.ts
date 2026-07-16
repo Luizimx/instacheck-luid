@@ -17,12 +17,18 @@ function getRandomFallback(): string {
   return FALLBACK_PHOTOS[Math.floor(Math.random() * FALLBACK_PHOTOS.length)]
 }
 
+// Serve a foto atraves do nosso proxy para evitar bloqueio de hotlink/CORS
+// do CDN do WhatsApp (pps.whatsapp.net) quando carregada no navegador.
+function proxied(url: string): string {
+  return `/api/instagram-image-proxy?url=${encodeURIComponent(url)}`
+}
+
 export async function POST(request: NextRequest) {
   // Fallback padrao caso a API falhe
   const fallbackPhoto = getRandomFallback()
   const fallbackPayload = {
     success: true,
-    result: fallbackPhoto,
+    result: proxied(fallbackPhoto),
     is_photo_private: true,
   }
 
@@ -55,7 +61,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: true,
-          result: cached.result,
+          result: proxied(cached.result),
           is_photo_private: false,
         },
         {
@@ -66,17 +72,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Tenta buscar da API RapidAPI
-    const apiUrl = `https://whatsapp-data1.p.rapidapi.com/number/${fullPhone}`
+    const apiUrl = "https://whatsapp-profile-data1.p.rapidapi.com/WhatsappProfilePhotoWithToken"
 
     let photoUrl: string | null = null
 
     try {
       const response = await fetch(apiUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
-          "x-rapidapi-key": "f575549d03mshca86c44dcf4b8b2p15d5ecjsn85e5e31470a0",
-          "x-rapidapi-host": "whatsapp-data1.p.rapidapi.com",
+          "x-rapidapi-key": "42865ce77amsh6b3ec8ac168e4c3p1ae1b6jsndc1ea20ce2d0",
+          "x-rapidapi-host": "whatsapp-profile-data1.p.rapidapi.com",
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({ phone_number: fullPhone }),
       })
 
       console.log("[v0] API Response status:", response.status)
@@ -87,12 +95,12 @@ export async function POST(request: NextRequest) {
 
         try {
           const jsonResponse = JSON.parse(responseText)
-          photoUrl = jsonResponse.urlImage ||
+          photoUrl = jsonResponse.url ||
+                     jsonResponse.urlImage ||
                      jsonResponse.profile_pic || 
                      jsonResponse.profilePic || 
                      jsonResponse.picture || 
                      jsonResponse.photo || 
-                     jsonResponse.url || 
                      jsonResponse.result
           console.log("[v0] Extracted photo URL:", photoUrl)
         } catch {
@@ -131,11 +139,11 @@ export async function POST(request: NextRequest) {
       cache.delete(oldestKey)
     }
 
-    // Retorna a URL da foto de perfil
+    // Retorna a URL da foto de perfil (via proxy para carregar no navegador)
     return NextResponse.json(
       {
         success: true,
-        result: photoUrl.trim(),
+        result: proxied(photoUrl.trim()),
         is_photo_private: false,
       },
       {
