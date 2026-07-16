@@ -17,12 +17,18 @@ function getRandomFallback(): string {
   return FALLBACK_PHOTOS[Math.floor(Math.random() * FALLBACK_PHOTOS.length)]
 }
 
+// Serve a foto atraves do nosso proxy para evitar bloqueio de hotlink/CORS
+// do CDN do WhatsApp (pps.whatsapp.net) quando carregada no navegador.
+function proxied(url: string): string {
+  return `/api/instagram-image-proxy?url=${encodeURIComponent(url)}`
+}
+
 export async function POST(request: NextRequest) {
   // Fallback padrao caso a API falhe
   const fallbackPhoto = getRandomFallback()
   const fallbackPayload = {
     success: true,
-    result: fallbackPhoto,
+    result: proxied(fallbackPhoto),
     is_photo_private: true,
   }
 
@@ -55,7 +61,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: true,
-          result: cached.result,
+          result: proxied(cached.result),
           is_photo_private: false,
         },
         {
@@ -133,11 +139,11 @@ export async function POST(request: NextRequest) {
       cache.delete(oldestKey)
     }
 
-    // Retorna a URL da foto de perfil
+    // Retorna a URL da foto de perfil (via proxy para carregar no navegador)
     return NextResponse.json(
       {
         success: true,
-        result: photoUrl.trim(),
+        result: proxied(photoUrl.trim()),
         is_photo_private: false,
       },
       {
